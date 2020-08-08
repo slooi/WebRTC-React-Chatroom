@@ -37,6 +37,7 @@ html, body, #root, .app{
 
     /* Inside */
     padding:1rem;
+    overflow-y: scroll;
 }
 @media screen and (max-width:21rem){
     .user-list{
@@ -71,6 +72,10 @@ html, body, #root, .app{
     margin-bottom:4px;
 }
 
+.user-item{
+    font-weight: 500;
+    margin-bottom:4px;
+}
 
 /* #################### */
 /* NON-COMPONENTS */
@@ -94,4 +99,29 @@ input{
 
 .user{
     font-weight: 500;
+}
+
+
+/* #################### */
+/* SCROLL BAR */
+/* #################### */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #EFEFEF; /* #fafafa #f1f1f1;  */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #CCC; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #AAA; 
 }

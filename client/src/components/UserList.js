@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
+import UserItem from './UserItem'
 
 class UserList extends Component{
     render(){
         return (
             <div className="user-list">
-                This is UserList
+                <UserItem username="Bob"/>
+                <UserItem username="Sammy"/>
+                <UserItem username="Bob The farmer yeah boi thisIsThe awesome-Ist manInTheWorld"/>
             </div>
         )
     }
