@@ -113,12 +113,12 @@ input{
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #EFEFEF; /* #fafafa #f1f1f1;  */
+    background: #DBDBDB; /* EFEFEF #fafafa #f1f1f1;  */
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #CCC; 
+    background: #B8B8B8; /* CCC */
 }
 
 /* Handle on hover */
