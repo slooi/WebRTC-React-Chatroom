@@ -1,4 +1,4 @@
-import {CREATE_USERNAME} from '../actions/action.js'
+import {CREATE_USERNAME} from '../actions/types.js'
 
 const initalState = ''
 
