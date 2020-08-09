@@ -4,11 +4,13 @@
   "description": "Basic webrtc react chatroom app",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build --prefix client",
-    "dev": "npm run dev --prefix client"
+    "dev": "nodemon main.js"
   },
   "author": "samue looi",
   "license": "ISC",
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.17.1",
+    "ws": "^7.3.1"
+  }
 }
