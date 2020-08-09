@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {postMessage} from '../actions/actions.js'
 import {connect} from 'react-redux'
 
-
 class MessageForm extends Component{
     constructor(props){
         super(props)
@@ -16,7 +15,7 @@ class MessageForm extends Component{
         e.target.message.value = ''
 
         this.props.postMessage({
-            username: "bob famer template name",
+            username: this.props.username,
             message: message
         })
     }
@@ -30,8 +29,14 @@ class MessageForm extends Component{
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        username:state.username
+    }
+}
+
 const mapDispatchToProps = {
     postMessage
 }
 
-export default connect(null,mapDispatchToProps)(MessageForm)
+export default connect(mapStateToProps,mapDispatchToProps)(MessageForm)
