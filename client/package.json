@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --config webpack.prod.js",
-    "dev": "webpack-dev-server --config webpack.common.js"
+    "dev": "webpack-dev-server --config webpack.dev.js"
   },
   "author": "samue looi",
   "license": "ISC",
