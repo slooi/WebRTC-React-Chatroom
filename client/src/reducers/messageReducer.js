@@ -1,4 +1,4 @@
-import {POST_MESSAGE,CREATE_USERNAME} from '../actions/types.js'
+import {POST_MESSAGE} from '../actions/types.js'
 
 const initialState = []
 

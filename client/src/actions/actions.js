@@ -9,3 +9,10 @@ export const postMessage = function(fullMessage){
         payload:fullMessage
     }
 }
+
+export const createUsername = function(username){
+    return {
+        type:'CREATE_USERNAME',
+        payload:username
+    }
+}
