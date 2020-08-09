@@ -1,0 +1,2 @@
+export const POST_MESSAGE = "POST_MESSAGE"
+export const CREATE_USERNAME = "CREATE_USERNAME"
