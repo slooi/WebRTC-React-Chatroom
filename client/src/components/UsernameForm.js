@@ -2,12 +2,19 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {createUsername} from '../actions/actions.js'
 
+
+import UserManager from '../UserManager.js'
+
 const UsernameForm = function(props){
+    window.userManager = new UserManager()
+
     const onSubmit = function(e){
         e.preventDefault()
         const username = e.target.username.value
         e.target.username.value = ''
-        props.createUsername(username)
+        if(username.length>0){
+            props.createUsername(username)
+        }
     }
     return (
         <div className="username-form">

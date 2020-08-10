@@ -4,9 +4,14 @@ import {connect} from 'react-redux'
 import {postMessage} from '../actions/actions.js'
 
 
+
+
 class Chat extends Component{
     constructor(props){
         super(props)
+    }
+    componentDidMount(){
+        // window.network = new Network() //!@#!@!@#
     }
     render(){
         console.log(this.props)

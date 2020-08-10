@@ -39,16 +39,11 @@ module.exports = function createApp(server){
                 const newPayload = JSON.stringify([senderId,data])
         
                 // Send
-                console.log('sending to destId:',destId)
                 destWs.send(newPayload)
-        
-                console.log('payload',payload)
             }
         })
-        ws.on('close',e=>{
-            console.log('BEFORE',idWebsocketPair)
+        ws.on('close',()=>{
             idWebsocketPair.deleteByWs(ws)
-            console.log('AFTER',idWebsocketPair)
         })
     })
 
