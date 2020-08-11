@@ -3,8 +3,6 @@ const app = express()
 const path = require('path')
 const http = require('http')
 const myApp = require('./app.js')
-const ws = require('ws')
-const PairHandler = require('./PairHandler.js')
 
 // ENVIRONMENT VARIABLES / CONSTANTS
 const PORT = process.env.PORT || 8443 

@@ -1,4 +1,6 @@
 module.exports = function createApp(server){
+    const ws = require('ws')
+    const PairHandler = require('./PairHandler.js')
 
 
     // Application Variables/Constants
