@@ -20,7 +20,7 @@ export default class Network{
     setup(){
         // Setup websocket
         // this.ws = new WebSocket(location.origin.replace(/^http/,'ws'))
-        this.ws = new WebSocket(location.origin.replace(/^http/,'ws').replace(/\:\d\d\d\d/,':8443'))
+        this.ws = new WebSocket(location.origin.replace(/^http/,'ws'))
         // ws
         this.ws.sendPayload = (destId,data)=>{
             this.ws.send(JSON.stringify([destId,data]))

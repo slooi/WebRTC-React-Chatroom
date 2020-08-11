@@ -1,3 +1,4 @@
 node_modules/
-client/src/
+# client/src/
+# dist/
 .DS_Store
