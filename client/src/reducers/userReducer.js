@@ -11,7 +11,7 @@ export const userReducer = function(state = initalState, action){
                 if(user.id !== action.payload){
                     return user
                 }
-            })
+            })  
             return result
         default:
             return state

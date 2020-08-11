@@ -20,7 +20,7 @@ module.exports = function createApp(server){
         
         // Give user list of all player ids
         ws.send(JSON.stringify([id,idWebsocketPair.getIdList()]))    // BEFORE YOU GIVE USER AN ID
-
+        console.log('sent to user: [id,idWebsocketPair.getIdList()]',[id,idWebsocketPair.getIdList()])
         // Update pair
         idWebsocketPair.add(id,ws)
         

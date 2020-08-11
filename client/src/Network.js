@@ -20,7 +20,7 @@ export default class Network{
     setup(){
         // Setup websocket
         // this.ws = new WebSocket(location.origin.replace(/^http/,'ws'))
-        this.ws = new WebSocket(location.origin.replace(/^http/,'ws'))
+        this.ws = new WebSocket(location.origin.replace(/^http/,'ws').replace(/\:\d\d\d\d/,':8443'))
         // ws
         this.ws.sendPayload = (destId,data)=>{
             this.ws.send(JSON.stringify([destId,data]))
@@ -31,7 +31,7 @@ export default class Network{
     establishConnectionList(){
         // Tries to ESTABLISH a connection with all peers in peerList
         this.peerList.forEach(id=>{
-            if(!this.peerList[id]){
+            if((this.peerList[id]===undefined)){
                 // If I've not already communicated with you, i'll create a connection
                 this.createConnection(id)
                 this.sendOffer(id)
@@ -84,6 +84,16 @@ export default class Network{
             this.peerList = data[1]
 
             console.log('Your are: ',this.localId)
+            console.log('Your are: ',this.localId)
+            console.log('Your are: ',this.localId)
+            console.log('Your are: ',this.localId)
+            console.log('Your are: ',this.localId)
+
+            console.log('this.peerList: ',this.peerList)
+            console.log('this.peerList: ',this.peerList)
+            console.log('this.peerList: ',this.peerList)
+            console.log('this.peerList: ',this.peerList)
+            console.log('this.peerList: ',this.peerList)
             
 
 
@@ -102,7 +112,8 @@ export default class Network{
     }
     broadcast(data){
         // Send data to ALL connections
-        Object.keys(this.connections).forEach(id=>{
+        this.peerList.forEach(id=>{
+            console.log('this.peerList foreach',this.peerList)
             this.send(id,data)
         })
     }
