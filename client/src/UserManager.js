@@ -190,10 +190,16 @@ export default class UserManager{
         console.log('Got message! remoteId message',remoteId,message)
     }
     onClose(remoteId){
-        this.onUserLeave(remoteId,this.users[remoteId].username)
-        
-
-        delete this.users[remoteId]
-        console.log('closed')
+        const user = this.users[remoteId]
+        if(user){
+            if(user.username.length !== 0){
+                // Only tell them that user has left if their username has been established 
+                this.onUserLeave(remoteId,user.username)
+            }
+            
+    
+            delete this.users[remoteId]
+            console.log('closed')
+        }
     }
 }

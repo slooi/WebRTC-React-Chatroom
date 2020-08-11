@@ -2,9 +2,7 @@ import {POST_MESSAGE,ADD_REMOTE_MESSAGE,CREATE_USERNAME,ADD_NEW_USER,REMOVE_USER
 
 
 export const postMessage = function(fullMessage){
-    console.log('I WAS CALLED, fullMessage:',fullMessage)
     // fullMessage - {username:string , message:string }
-    console.log(window.userManager)
     window.userManager.broadcastStr(fullMessage.message)
     return {
         type:POST_MESSAGE,

@@ -8,25 +8,28 @@ import UserManager from '../UserManager.js'
 const UsernameForm = function(props){
     window.userManager = new UserManager()
 
+
+    userManager.setMessageCallback((username,message)=>{
+        props.addRemoteMessage({username,message})
+    })
+    userManager.setGotUserCallback(user=>{
+        console.log(user)
+        props.addNewUser(user)
+    })
+    userManager.setUserLeftCallback((id,username)=>{
+        props.removeUserById(id)
+        
+        props.addRemoteMessage({username:'',message:username})
+    })
+
+
+
     const onSubmit = function(e){
         e.preventDefault()
         const username = e.target.username.value
         e.target.username.value = ''
         if(username.length>0){
             props.createUsername(username)
-
-            userManager.setMessageCallback((username,message)=>{
-                props.addRemoteMessage({username,message})
-            })
-            userManager.setGotUserCallback(user=>{
-                console.log(user)
-                props.addNewUser(user)
-            })
-            userManager.setUserLeftCallback((id,username)=>{
-                props.removeUserById(id)
-                
-                props.addRemoteMessage({username:'',message:username})
-            })
 
             // Set username
             userManager.setUsername(username)

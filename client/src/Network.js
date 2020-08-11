@@ -94,26 +94,32 @@ export default class Network{
     send(destId,data){
         // Sends data to ONE connection
         const connection = this.connections[destId]
-        if(connection.dataChannelReadyState === 1){
-            this.connections[destId].send(data)
+        if(this.connections[destId]){
+            if(connection.dataChannelReadyState === 1){
+                this.connections[destId].send(data)
+            }
         }
     }
     broadcast(data){
         // Send data to ALL connections
-        this.peerList.forEach(id=>{
+        Object.keys(this.connections).forEach(id=>{
             this.send(id,data)
         })
     }
     deleteConnection(remoteId){
         // Remove from peerList
         const indexOfId = this.peerList.indexOf(remoteId)
-        this.peerList.splice(indexOfId,1)
-
-        // Remove from connections
-        delete this.connections[remoteId]
-
-        // !@#!@#!@# NOTE there's a chance that connection peerList contains more ids than it should as a peer could have left before 
-        // a datachannel was established
+        if(indexOfId !== -1){
+            this.peerList.splice(indexOfId,1)
+            console.log('REMOVING: remoteId',remoteId,'. Has index of :',indexOfId)
+            console.log('REMOVING: this.connections[remoteId]',this.connections[remoteId])
+    
+            // Remove from connections
+            delete this.connections[remoteId]
+    
+            // !@#!@#!@# NOTE there's a chance that connection peerList contains more ids than it should as a peer could have left before 
+            // a datachannel was established
+        }
     }
     getIdList(){
         return Object.keys(this.connections).map(strVal=>Number(strVal))
@@ -145,6 +151,18 @@ class Connection{
         // datachannel
         // this.pc.ondatachannel = 
         this.pc.ondatachannel = this.dataChannelHandler
+
+        this.pc.onconnectionstatechange = e => {
+            if(this.dataChannel){
+                console.log('this.pc.connectionState',this.pc.connectionState)
+                console.log('this.pc.iceConnectionState',this.pc.iceConnectionState)
+                console.log('this.dataChannel.readyState',this.dataChannel.readyState)
+                if(this.pc.connectionState === "failed"){
+                    this.parent.handleClose(this.remoteId)
+                    this.deleteConnection()
+                }
+            }
+        }
     }
     sendOffer(){
         // create dataChannel
@@ -256,6 +274,7 @@ class Connection{
     deleteConnection(){
         // this.parent.handleClose(this.remoteId)
         this.parent.deleteConnection(this.remoteId)
+        this.pc.close();
     }
 
     setDeleteTimer(){
