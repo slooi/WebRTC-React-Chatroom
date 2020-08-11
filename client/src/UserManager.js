@@ -8,7 +8,7 @@ export default class UserManager{
         this.network
         this.localUsername = ''
         this.onMessageCallback
-        this.onGotUsername
+        this.onGotUser
         this.setup()
     }
     setup(){
@@ -58,8 +58,8 @@ export default class UserManager{
     setMessageCallback(callBack){
         this.onMessageCallback = callBack
     }
-    setGotUsernameCallback(callBack){
-        this.onGotUsername = callBack
+    setGotUserCallback(callBack){
+        this.onGotUser = callBack
     }
     establishUsername(id){
         console.log('establishUsername called! !@#!#!@# !@$!@% @!@#$## $! !$ @#!$%@%!$#%')
@@ -74,7 +74,10 @@ export default class UserManager{
                 const interval = setInterval(()=>{
                     if (user.localKnown && user.username.length !== 0){
                         // Remote user has seen message. So delete this
-                        this.onGotUsername(user.username)
+                        this.onGotUser({
+                            id:id,
+                            username:user.username
+                        })
                         this.removeInterval(interval,user)
                     }else if(this.network.connections[id] === undefined){
                         // connection broken. So delete this

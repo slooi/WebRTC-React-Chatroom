@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {createUsername,addRemoteMessage,addNewUsername} from '../actions/actions.js'
+import {createUsername,addRemoteMessage,addNewUser} from '../actions/actions.js'
 
 
 import UserManager from '../UserManager.js'
@@ -18,9 +18,9 @@ const UsernameForm = function(props){
             userManager.setMessageCallback((username,message)=>{
                 props.addRemoteMessage({username,message})
             })
-            userManager.setGotUsernameCallback(username=>{
-                console.log(username)
-                props.addNewUsername(username)
+            userManager.setGotUserCallback(user=>{
+                console.log(user)
+                props.addNewUser(user)
             })
 
             // Set username
@@ -48,7 +48,7 @@ const UsernameForm = function(props){
 const mapDispatchToProps = {
     createUsername,
     addRemoteMessage,
-    addNewUsername
+    addNewUser
 }
 
 export default connect(null,mapDispatchToProps)(UsernameForm)

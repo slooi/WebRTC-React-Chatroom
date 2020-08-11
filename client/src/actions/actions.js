@@ -1,4 +1,4 @@
-import {POST_MESSAGE,ADD_REMOTE_MESSAGE,ADD_NEW_USERNAME}  from './types.js'
+import {POST_MESSAGE,ADD_REMOTE_MESSAGE,CREATE_USERNAME,ADD_NEW_USER}  from './types.js'
 
 
 export const postMessage = function(fullMessage){
@@ -21,14 +21,14 @@ export const addRemoteMessage = function(fullMessage){
 
 export const createUsername = function(username){
     return {
-        type:'CREATE_USERNAME',
+        type:CREATE_USERNAME,
         payload:username
     }
 }
 
-export const addNewUsername = function(username){
+export const addNewUser = function(user){
     return {
-        type:ADD_NEW_USERNAME,
-        payload:username
+        type:ADD_NEW_USER,
+        payload:user
     }
 }

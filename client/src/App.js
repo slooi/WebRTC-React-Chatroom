@@ -11,14 +11,14 @@ const App = props => {
         <div className="app">
             <UserList />
             <MainContent />
-            {(props.usernames[0].length===0) && <UsernameForm/>}
+            {(props.username.length===0) && <UsernameForm/>}
         </div>
     )
 }
 
 const mapStateToProps = state => {
     return {
-        usernames: state.usernames
+        username: state.username
     }
 }
 
