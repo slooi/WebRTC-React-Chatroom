@@ -241,7 +241,12 @@ class Connection{
         })
         this.dataChannel.addEventListener('close',e=>{
             this.parent.handleClose(this.remoteId)
-            console.log('dataChannel CLOSED: ',e)
+            // console.log('dataChannel CLOSED: ',e)
+            // if(!window.unique){
+            //     window.unique = []
+            // }
+            // window.unique.push(this)
+            // debugger
             this.deleteConnection()
         })
     }
@@ -249,7 +254,7 @@ class Connection{
         this.dataChannel.send(data)
     }
     deleteConnection(){
-        this.parent.handleClose(this.remoteId)
+        // this.parent.handleClose(this.remoteId)
         this.parent.deleteConnection(this.remoteId)
     }
 

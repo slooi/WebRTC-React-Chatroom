@@ -17,9 +17,13 @@ class Chat extends Component{
         console.log(this.props)
         return (
             <div className="chat">
-                {this.props.messages.map((fullMessage,i)=>
-                    <Message key={i} user={fullMessage.username} message={fullMessage.message}/>
-                )}
+                {this.props.messages.map((fullMessage,i)=>{
+                    if(fullMessage.username === ''){
+                        return <Message key={i} username={''} message={`${fullMessage.message} has left the lobby`}/>
+                    }else{
+                        return <Message key={i} username={fullMessage.username} message={fullMessage.message}/>
+                    }
+                })}
             {/* <Message user="steve"  message="I'm awesome!"/> */}
             {/* <Message user="steve"  message="I'm awesome!"/> */}
             </div>

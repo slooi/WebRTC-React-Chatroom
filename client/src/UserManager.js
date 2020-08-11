@@ -9,6 +9,7 @@ export default class UserManager{
         this.localUsername = ''
         this.onMessageCallback
         this.onGotUser
+        this.onUserLeave
         this.setup()
     }
     setup(){
@@ -52,7 +53,7 @@ export default class UserManager{
         // ONLY RUNS ONCE
 
         Object.keys(this.users).forEach(id=>{
-            this.establishUsername(id)
+            this.establishUsername(Number(id))
         })
     }
     setMessageCallback(callBack){
@@ -60,6 +61,9 @@ export default class UserManager{
     }
     setGotUserCallback(callBack){
         this.onGotUser = callBack
+    }
+    setUserLeftCallback(callback){
+        this.onUserLeave = callback
     }
     establishUsername(id){
         console.log('establishUsername called! !@#!#!@# !@$!@% @!@#$## $! !$ @#!$%@%!$#%')
@@ -186,6 +190,9 @@ export default class UserManager{
         console.log('Got message! remoteId message',remoteId,message)
     }
     onClose(remoteId){
+        this.onUserLeave(remoteId,this.users[remoteId].username)
+        
+
         delete this.users[remoteId]
         console.log('closed')
     }
