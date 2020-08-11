@@ -9,8 +9,6 @@
   },
   "author": "samue looi",
   "license": "ISC",
-  "devDependencies": {
-  },
-  "dependencies": {
-  }
+  "devDependencies": {},
+  "dependencies": {}
 }
