@@ -8,7 +8,6 @@ export default class UserHandler{
         this.network
         this.localUsername = ''
         this.setup()
-        this.receivedMessageIds = []    // A list containing the ids that have been replied to
     }
     setup(){
         this.network = new Network()
@@ -21,7 +20,7 @@ export default class UserHandler{
         this.determineEstablishUsernameAll(0)
     }
     createUserObject(remoteId){
-        this.users[remoteId] = {username:'',localKnown:false}
+        this.users[remoteId] = {username:'',localKnown:false,state:0,hasInterval:false}
     }
     sendUsername(){
         // Sends username to remote clients
@@ -45,45 +44,53 @@ export default class UserHandler{
             1) Runs AFTER datachannel to remote is OPEN   AND   has a username 
         */ 
         console.log('establishUsernameAll HAS BEEN CALLED')
+        // ONLY RUNS ONCE
 
         Object.keys(this.users).forEach(id=>{
-            const user = this.users[id]
+            this.establishUsername(id)
+        })
+    }
+    establishUsername(id){
+        console.log('establishUsername called! !@#!#!@# !@$!@% @!@#$## $! !$ @#!$%@%!$#%')
+        const user = this.users[id]
+        if(user.hasInterval === false){
             if(user.localKnown === false){
                 // If remote peer has not confirmed they know local username send
 
+                user.hasInterval = true
+
                 // Repeatedly send payload in case it was not received
-                interval = setInterval(()=>{
-                    const idPos = this.receivedMessageIds.indexOf(id)
-                    if (idPos !== -1){
+                const interval = setInterval(()=>{
+                    if (user.localKnown && user.username.length !== 0){
                         // Remote user has seen message. So delete this
-                        this.receivedMessageIds.splice(idPos,1)
                         clearInterval(interval)
-                        return
+                        user.hasInterval = false
                     }
 
                     // [0 <= handling usernames state, username]
-                    const payload = [0,this.localUsername]
+                    let payload = [[user.localKnown,user.username.length!==0],this.localUsername]
                     this.network.send(id,JSON.stringify(payload))
                 },1000)
                 
                 // Remove this connection if establishment takes too long
-                let interval
-                setTimeout(()=>{
-                    if(interval){
-                        clearInterval(interval)
-                        interval = undefined
-                        console.log('Username establishment timed out')
-                        // Delete connection
-                        this.deleteConnection(id)
-                    }
-                },20*1000)
+                // let interval
+                // setTimeout(()=>{
+                //     if(interval){
+                //         clearInterval(interval)
+                //         interval = undefined
+                //         console.log('Username establishment timed out')
+                //         // Delete connection
+                //         this.deleteConnection(id)
+                //     }
+                // },20*1000)
             }
-        })
+        }
+            
     }
-    deleteConnection(remoteId){
-        delete this.users[remoteId]
-        this.network.deleteConnection(remoteId)
-    }
+    // deleteConnection(remoteId){
+    //     delete this.users[remoteId]
+    //     this.network.deleteConnection(remoteId)
+    // }
     onOpen(remoteId){
         // Should start trying to send usename to remote user.
         // BUT, need to make sure we've actaully got a username......
@@ -97,8 +104,9 @@ export default class UserHandler{
         this.determineEstablishUsernameAll(1)
         // AIM: call establishUsernameAll ONCE after we have username and datachannel open
     }
-    determineEstablishUsernameAll(type,remoteId){
+    determineEstablishUsernameAll(type){
         // Determines whether or not to run establishUsernameAll
+        // Is ONLY run ONCE
 
         // Prerequisites to establish username:
         // 1) Have user object of remote peer
@@ -106,25 +114,51 @@ export default class UserHandler{
         console.log('determineEstablishUsernameAll HAS BEEN CALLED!')
 
         if(type === 0){
-            if(Object.keys(this.users).length!==0){
-                // User has already been added
-                this.establishUsernameAll()
-            }
+            console.log('1 this.establishUsernameAll()')
+            this.establishUsernameAll()
         }else{
             // Checks to see if establishUsernameAll has been executed
             if(this.localUsername.length !== 0){
                 // Username has already been set. Thus execute establishUsernameAll
+                console.log('2 this.establishUsernameAll()')
                 this.establishUsernameAll()
             }
         }
     }
     onMessage(remoteId,message){
-        // First checks whether usernames have been established with this peer
-        if(this.users[remoteId])
+        console.log('ON MESSAGE CALLED!!!!')
+
+
+        const state = message[0]
+        const user = this.users[remoteId]
+        if(typeof state === "object"){
+            const [remoteLocalKnown,myUsernameKnown] = state
+
+            // Get data
+            const data = message[1]
+            // Update user
+            user.username = data
+            user.localKnown = myUsernameKnown
+
+            if(!remoteLocalKnown || !myUsernameKnown){
+                // If remote doesn't knows I know its username
+                // OR remote doesn't knows my username
+                // Send
+
+                if(this.localUsername.length !== 0){
+                    
+
+                    // Send
+                    console.log('onmessage establishUsername')
+                    this.establishUsername(remoteId)
+                }
+            }
+        }
 
         console.log('Got message! remoteId message',remoteId,message)
     }
-    onClose(){
+    onClose(remoteId){
+        delete this.users[remoteId]
         console.log('closed')
     }
 }
