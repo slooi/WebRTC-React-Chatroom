@@ -12,10 +12,10 @@
   "author": "samue looi",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^4.44.1",
-    "express": "^4.17.1"
+    "webpack": "^4.44.1"
   },
   "dependencies": {
-    "concurrently": "^5.3.0"
+    "concurrently": "^5.3.0",
+    "express": "^4.17.1"
   }
 }
