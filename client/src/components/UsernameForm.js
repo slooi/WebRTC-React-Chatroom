@@ -32,7 +32,7 @@ const UsernameForm = function(props){
     return (
         <div className="username-form">
             <div className="form-box">
-                <div>Enter your username:</div>
+                <div className="username-text-prompt">Enter your username:</div>
                 <br/>
                 <br/>
                 <div className="username-form-container">

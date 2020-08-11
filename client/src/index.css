@@ -133,14 +133,19 @@ input{
 
     /* Positioning */
     position: relative;
-    transform: translate3d(0,-2rem,0);
-
+    transform: translateY(-2rem);
+    /* transform: translate3d(0,-3rem,0) scale(1.048) translateZ(0); */
+    /* transform: ; */
+    
     /* Inside */
     text-align: center;
 }
 
 .username-form-container{
     height:3rem;
+}
+.username-text-prompt{
+    font-size: 1.2rem;
 }
 
 /* #################### */
