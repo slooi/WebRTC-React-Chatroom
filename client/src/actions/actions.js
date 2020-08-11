@@ -1,4 +1,4 @@
-import {POST_MESSAGE}  from './types.js'
+import {POST_MESSAGE,ADD_REMOTE_MESSAGE}  from './types.js'
 
 
 export const postMessage = function(fullMessage){
@@ -6,6 +6,13 @@ export const postMessage = function(fullMessage){
     // fullMessage - {username:string , message:string }
     return {
         type:POST_MESSAGE,
+        payload:fullMessage
+    }
+}
+
+export const addRemoteMessage = function(fullMessage){
+    return {
+        type: ADD_REMOTE_MESSAGE,
         payload:fullMessage
     }
 }

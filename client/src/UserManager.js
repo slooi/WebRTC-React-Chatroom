@@ -7,6 +7,7 @@ export default class UserHandler{
         this.users = {} // A mapping from id to Object(username,localKnown), these are ESTABLISHED usernames
         this.network
         this.localUsername = ''
+        this.onMessageCallback
         this.setup()
     }
     setup(){
@@ -49,6 +50,9 @@ export default class UserHandler{
         Object.keys(this.users).forEach(id=>{
             this.establishUsername(id)
         })
+    }
+    setMessageCallback(callBack){
+        this.onMessageCallback = callBack
     }
     establishUsername(id){
         console.log('establishUsername called! !@#!#!@# !@$!@% @!@#$## $! !$ @#!$%@%!$#%')
@@ -131,11 +135,11 @@ export default class UserHandler{
 
         const state = message[0]
         const user = this.users[remoteId]
+        // Get data
+        const data = message[1]
         if(typeof state === "object"){
             const [remoteLocalKnown,myUsernameKnown] = state
 
-            // Get data
-            const data = message[1]
             // Update user
             user.username = data
             user.localKnown = myUsernameKnown
@@ -153,6 +157,12 @@ export default class UserHandler{
                     this.establishUsername(remoteId)
                 }
             }
+        }else{
+            // If not during username establishment stage:
+            console.log('I GOT SOME DATA!!!!!! ',data)
+            console.log('I GOT SOME DATA!!!!!! ',data)
+            console.log('I GOT SOME DATA!!!!!! ',data)
+            this.onMessageCallback(user.username,data)
         }
 
         console.log('Got message! remoteId message',remoteId,message)
