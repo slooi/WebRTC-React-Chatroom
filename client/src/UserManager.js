@@ -61,8 +61,8 @@ export default class UserHandler{
 
                 // Repeatedly send payload in case it was not received
                 const interval = setInterval(()=>{
-                    if (user.localKnown && user.username.length !== 0){
-                        // Remote user has seen message. So delete this
+                    if (user.localKnown && user.username.length !== 0 || this.network.connections[id] === undefined){
+                        // Remote user has seen message OR connection broken. So delete this
                         clearInterval(interval)
                         user.hasInterval = false
                     }

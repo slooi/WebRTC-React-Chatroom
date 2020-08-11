@@ -14,6 +14,7 @@ const UsernameForm = function(props){
         e.target.username.value = ''
         if(username.length>0){
             props.createUsername(username)
+            // userManager.setUsername(username)
         }
     }
     return (
