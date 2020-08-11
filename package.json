@@ -6,7 +6,6 @@
   "scripts": {
     "start": "npm start --prefix server",
     "buildStart": "concurrently \"npm run build\" \"npm run start\"",
-    "build": "npm run build --prefix client",
     "dev": "npm run dev --prefix client"
   },
   "author": "samue looi",
