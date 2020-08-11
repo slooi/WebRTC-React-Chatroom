@@ -15,7 +15,7 @@ class MessageForm extends Component{
         e.target.message.value = ''
 
         this.props.postMessage({
-            username: this.props.username,
+            username: this.props.usernames[0],
             message: message
         })
     }
@@ -31,7 +31,7 @@ class MessageForm extends Component{
 
 const mapStateToProps = state => {
     return {
-        username:state.username
+        usernames:state.usernames
     }
 }
 

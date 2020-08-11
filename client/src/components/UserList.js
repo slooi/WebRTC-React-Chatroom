@@ -10,7 +10,7 @@ class UserList extends Component{
     render = () => {
         return (
             <div className="user-list">
-                <UserItem username={this.props.username}/>
+                {this.props.usernames.map((username,i)=><UserItem key={i} username={username}/>)}
             </div>
         )
     }
@@ -18,7 +18,7 @@ class UserList extends Component{
 
 const mapStateToProps = state => {
     return {
-        username:state.username
+        usernames:state.usernames
     }
 }
 

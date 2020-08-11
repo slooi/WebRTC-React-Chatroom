@@ -4,7 +4,7 @@ import {usernameReducer} from './usernameReducer.js'
 
 const rootReducer = combineReducers({
     messages:messageReducer,
-    username:usernameReducer
+    usernames:usernameReducer
 })
 
 export default rootReducer

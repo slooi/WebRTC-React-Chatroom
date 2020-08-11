@@ -2,12 +2,13 @@
 // Managers the establishment and removal of users
 import Network from './Network.js'
 
-export default class UserHandler{
+export default class UserManager{
     constructor(){
         this.users = {} // A mapping from id to Object(username,localKnown), these are ESTABLISHED usernames
         this.network
         this.localUsername = ''
         this.onMessageCallback
+        this.onGotUsername
         this.setup()
     }
     setup(){
@@ -22,6 +23,9 @@ export default class UserHandler{
     }
     createUserObject(remoteId){
         this.users[remoteId] = {username:'',localKnown:false,state:0,hasInterval:false}
+    }
+    broadcastStr(message){
+        this.network.broadcast(JSON.stringify([1,message]))
     }
     sendUsername(){
         // Sends username to remote clients
@@ -54,6 +58,9 @@ export default class UserHandler{
     setMessageCallback(callBack){
         this.onMessageCallback = callBack
     }
+    setGotUsernameCallback(callBack){
+        this.onGotUsername = callBack
+    }
     establishUsername(id){
         console.log('establishUsername called! !@#!#!@# !@$!@% @!@#$## $! !$ @#!$%@%!$#%')
         const user = this.users[id]
@@ -65,16 +72,19 @@ export default class UserHandler{
 
                 // Repeatedly send payload in case it was not received
                 const interval = setInterval(()=>{
-                    if (user.localKnown && user.username.length !== 0 || this.network.connections[id] === undefined){
-                        // Remote user has seen message OR connection broken. So delete this
-                        clearInterval(interval)
-                        user.hasInterval = false
+                    if (user.localKnown && user.username.length !== 0){
+                        // Remote user has seen message. So delete this
+                        this.onGotUsername(user.username)
+                        this.removeInterval(interval,user)
+                    }else if(this.network.connections[id] === undefined){
+                        // connection broken. So delete this
+                        this.removeInterval(interval,user)
                     }
 
                     // [0 <= handling usernames state, username]
                     let payload = [[user.localKnown,user.username.length!==0],this.localUsername]
                     this.network.send(id,JSON.stringify(payload))
-                },1000)
+                },200)
                 
                 // Remove this connection if establishment takes too long
                 // let interval
@@ -90,6 +100,10 @@ export default class UserHandler{
             }
         }
             
+    }
+    removeInterval(interval,user){
+        clearInterval(interval)
+        user.hasInterval = false
     }
     // deleteConnection(remoteId){
     //     delete this.users[remoteId]
@@ -162,6 +176,7 @@ export default class UserHandler{
             console.log('I GOT SOME DATA!!!!!! ',data)
             console.log('I GOT SOME DATA!!!!!! ',data)
             console.log('I GOT SOME DATA!!!!!! ',data)
+            console.log(user.username,user.username,user.username)
             this.onMessageCallback(user.username,data)
         }
 
