@@ -4,6 +4,7 @@
   "description": "Basic webrtc react chatroom app",
   "main": "index.js",
   "scripts": {
+    "start": "npm start --prefix server",
     "build": "npm run build --prefix client",
     "dev": "npm run dev --prefix client"
   },

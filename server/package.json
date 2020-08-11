@@ -4,6 +4,7 @@
   "description": "Basic webrtc react chatroom app",
   "main": "index.js",
   "scripts": {
+    "start": "node main.js",
     "dev": "nodemon main.js"
   },
   "author": "samue looi",
